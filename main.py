@@ -3,14 +3,14 @@ import bs4
 from logger import logger
 
 
-@logger
+@logger('log_path','log.csv')
 def wheather (city):
     try:
         result_dict = {'city':'', 'temp': '', 'desc':''}
         response = requests.get(f'https://sinoptik.com.ru/погода-{city.lower()}')
         response.raise_for_status()
         soup = bs4.BeautifulSoup(response.text, features='html.parser')
-        div = soup.find_all('div', class_='weather__content_tab current')
+        div = soup.find_all('div', class_='weather__content_tab current dateFree')
         for item in div:
             temp = item.find('b')
             temp1 = temp.find_next('b')
